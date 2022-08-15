@@ -6,7 +6,7 @@ use App\Repository\EducationDegreeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EducationDegreeRepository::class)]
-class EducationDegree
+class EducationDegree extends EntityBase
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

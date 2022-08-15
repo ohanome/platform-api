@@ -7,7 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: GamingPlatformRepository::class)]
-class GamingPlatform
+class GamingPlatform extends EntityBase
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

@@ -6,7 +6,7 @@ use App\Repository\BookmarkRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BookmarkRepository::class)]
-class Bookmark
+class Bookmark extends EntityBase
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

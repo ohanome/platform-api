@@ -6,7 +6,7 @@ use App\Repository\SocialMediaProfileRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SocialMediaProfileRepository::class)]
-class SocialMediaProfile
+class SocialMediaProfile extends EntityBase
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

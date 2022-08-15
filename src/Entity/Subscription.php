@@ -6,7 +6,7 @@ use App\Repository\SubscriptionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SubscriptionRepository::class)]
-class Subscription
+class Subscription extends EntityBase
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

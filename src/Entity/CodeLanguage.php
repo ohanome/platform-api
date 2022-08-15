@@ -6,7 +6,7 @@ use App\Repository\CodeLanguageRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CodeLanguageRepository::class)]
-class CodeLanguage
+class CodeLanguage extends EntityBase
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

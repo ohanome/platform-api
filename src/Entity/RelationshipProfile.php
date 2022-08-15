@@ -9,7 +9,7 @@ use App\Repository\RelationshipProfileRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RelationshipProfileRepository::class)]
-class RelationshipProfile
+class RelationshipProfile extends EntityBase
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

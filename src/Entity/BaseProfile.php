@@ -8,7 +8,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BaseProfileRepository::class)]
-class BaseProfile
+class BaseProfile extends EntityBase
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

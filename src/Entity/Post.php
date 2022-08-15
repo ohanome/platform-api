@@ -9,7 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
-class Post
+class Post extends EntityBase
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

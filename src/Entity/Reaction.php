@@ -6,7 +6,7 @@ use App\Repository\ReactionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ReactionRepository::class)]
-class Reaction
+class Reaction extends EntityBase
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

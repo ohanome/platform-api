@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: GamingProfileRepository::class)]
-class GamingProfile
+class GamingProfile extends EntityBase
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

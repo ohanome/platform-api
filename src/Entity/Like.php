@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LikeRepository::class)]
 #[ORM\Table(name: '`like`')]
-class Like
+class Like extends EntityBase
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

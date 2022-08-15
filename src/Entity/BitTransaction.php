@@ -6,7 +6,7 @@ use App\Repository\BitTransactionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BitTransactionRepository::class)]
-class BitTransaction
+class BitTransaction extends EntityBase
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

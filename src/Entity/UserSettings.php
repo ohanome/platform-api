@@ -6,7 +6,7 @@ use App\Repository\UserSettingsRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserSettingsRepository::class)]
-class UserSettings
+class UserSettings extends EntityBase
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

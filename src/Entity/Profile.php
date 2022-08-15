@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProfileRepository::class)]
-class Profile
+class Profile extends EntityBase
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

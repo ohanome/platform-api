@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SystemRepository::class)]
 #[ORM\Table(name: '`system`')]
-class System
+class System extends EntityBase
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

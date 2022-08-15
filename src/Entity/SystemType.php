@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SystemTypeRepository::class)]
-class SystemType
+class SystemType extends EntityBase
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

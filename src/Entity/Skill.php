@@ -6,7 +6,7 @@ use App\Repository\SkillRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SkillRepository::class)]
-class Skill
+class Skill extends EntityBase
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
