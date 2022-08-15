@@ -1,0 +1,290 @@
+{
+	"info": {
+		"_postman_id": "ee289660-a70b-4fea-bb32-f17746d0a4bf",
+		"name": "Platform API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Misc",
+			"item": [
+				{
+					"name": "Create Admin user (if not exist)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/misc/create-admin-user",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"misc",
+								"create-admin-user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/misc",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"misc"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "API",
+			"item": [
+				{
+					"name": "Admin",
+					"item": [
+						{
+							"name": "Index",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2NjA1ODE2OTYsImV4cCI6MTY2MDU4NTI5Niwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImFkbWluIn0.oeA6JbArfttHytkW_PC6IBxcqRxV0Vxduz6IkxQYTuavfNJ8x6e50sW8rHiFzXlalqWrzIGV7COZX_J-kyFXBqTHtRuwd4_OaCOAG8uoxQR5VtyZnxz245Rh5LuYU9fuaTTkFyiLAfdgJflXk7umLIX7YJ_l34WcVvT97EoApfnlNALPkkcpS-MtaHP_ecoLrApMo--Occryaz-k1KEGwaP9inslikjQkvcobmtlvB0yYajTQi3eMOryPqEcmU-fnMirvtAdahChrtS9eGGBXFqGnVzipSteJUQGZB8YiUf8Ec65z5wUc5k1zstDhb45vGhDsbcqOl0v_coYyIycQQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/admin",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"admin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "All users",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2NjA1ODE2OTYsImV4cCI6MTY2MDU4NTI5Niwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImFkbWluIn0.oeA6JbArfttHytkW_PC6IBxcqRxV0Vxduz6IkxQYTuavfNJ8x6e50sW8rHiFzXlalqWrzIGV7COZX_J-kyFXBqTHtRuwd4_OaCOAG8uoxQR5VtyZnxz245Rh5LuYU9fuaTTkFyiLAfdgJflXk7umLIX7YJ_l34WcVvT97EoApfnlNALPkkcpS-MtaHP_ecoLrApMo--Occryaz-k1KEGwaP9inslikjQkvcobmtlvB0yYajTQi3eMOryPqEcmU-fnMirvtAdahChrtS9eGGBXFqGnVzipSteJUQGZB8YiUf8Ec65z5wUc5k1zstDhb45vGhDsbcqOl0v_coYyIycQQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/admin/all-users",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"all-users"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "Get One",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2NjA1ODE2OTYsImV4cCI6MTY2MDU4NTI5Niwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImFkbWluIn0.oeA6JbArfttHytkW_PC6IBxcqRxV0Vxduz6IkxQYTuavfNJ8x6e50sW8rHiFzXlalqWrzIGV7COZX_J-kyFXBqTHtRuwd4_OaCOAG8uoxQR5VtyZnxz245Rh5LuYU9fuaTTkFyiLAfdgJflXk7umLIX7YJ_l34WcVvT97EoApfnlNALPkkcpS-MtaHP_ecoLrApMo--Occryaz-k1KEGwaP9inslikjQkvcobmtlvB0yYajTQi3eMOryPqEcmU-fnMirvtAdahChrtS9eGGBXFqGnVzipSteJUQGZB8YiUf8Ec65z5wUc5k1zstDhb45vGhDsbcqOl0v_coYyIycQQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/user/2",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2NjA1ODE2OTYsImV4cCI6MTY2MDU4NTI5Niwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImFkbWluIn0.oeA6JbArfttHytkW_PC6IBxcqRxV0Vxduz6IkxQYTuavfNJ8x6e50sW8rHiFzXlalqWrzIGV7COZX_J-kyFXBqTHtRuwd4_OaCOAG8uoxQR5VtyZnxz245Rh5LuYU9fuaTTkFyiLAfdgJflXk7umLIX7YJ_l34WcVvT97EoApfnlNALPkkcpS-MtaHP_ecoLrApMo--Occryaz-k1KEGwaP9inslikjQkvcobmtlvB0yYajTQi3eMOryPqEcmU-fnMirvtAdahChrtS9eGGBXFqGnVzipSteJUQGZB8YiUf8Ec65z5wUc5k1zstDhb45vGhDsbcqOl0v_coYyIycQQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/user",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"tesz\",\n    \"email\": \"test@test.de\",\n    \"password\": \"password\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/user/",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Index",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2NjA1ODE2OTYsImV4cCI6MTY2MDU4NTI5Niwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImFkbWluIn0.oeA6JbArfttHytkW_PC6IBxcqRxV0Vxduz6IkxQYTuavfNJ8x6e50sW8rHiFzXlalqWrzIGV7COZX_J-kyFXBqTHtRuwd4_OaCOAG8uoxQR5VtyZnxz245Rh5LuYU9fuaTTkFyiLAfdgJflXk7umLIX7YJ_l34WcVvT97EoApfnlNALPkkcpS-MtaHP_ecoLrApMo--Occryaz-k1KEGwaP9inslikjQkvcobmtlvB0yYajTQi3eMOryPqEcmU-fnMirvtAdahChrtS9eGGBXFqGnVzipSteJUQGZB8YiUf8Ec65z5wUc5k1zstDhb45vGhDsbcqOl0v_coYyIycQQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Get Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/authentication_token",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"authentication_token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "https://platform-api.lndo.site"
+		}
+	]
+}
