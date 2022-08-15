@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -50,6 +52,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?UserSettings $userSettings = null;
+
+    #[ORM\OneToMany(mappedBy: 'sender', targetEntity: BitTransaction::class)]
+    private Collection $bitTransactions;
+
+    #[ORM\OneToMany(mappedBy: 'receiver', targetEntity: BitTransaction::class)]
+    private Collection $receivedBitTransactions;
+
+    public function __construct()
+    {
+        $this->bitTransactions = new ArrayCollection();
+        $this->receivedBitTransactions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -228,6 +242,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         $this->userSettings = $userSettings;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BitTransaction>
+     */
+    public function getBitTransactions(): Collection
+    {
+        return $this->bitTransactions;
+    }
+
+    public function addBitTransaction(BitTransaction $bitTransaction): self
+    {
+        if (!$this->bitTransactions->contains($bitTransaction)) {
+            $this->bitTransactions->add($bitTransaction);
+            $bitTransaction->setSender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBitTransaction(BitTransaction $bitTransaction): self
+    {
+        if ($this->bitTransactions->removeElement($bitTransaction)) {
+            // set the owning side to null (unless already changed)
+            if ($bitTransaction->getSender() === $this) {
+                $bitTransaction->setSender(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BitTransaction>
+     */
+    public function getReceivedBitTransactions(): Collection
+    {
+        return $this->receivedBitTransactions;
+    }
+
+    public function addReceivedBitTransaction(BitTransaction $receivedBitTransaction): self
+    {
+        if (!$this->receivedBitTransactions->contains($receivedBitTransaction)) {
+            $this->receivedBitTransactions->add($receivedBitTransaction);
+            $receivedBitTransaction->setReceiver($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReceivedBitTransaction(BitTransaction $receivedBitTransaction): self
+    {
+        if ($this->receivedBitTransactions->removeElement($receivedBitTransaction)) {
+            // set the owning side to null (unless already changed)
+            if ($receivedBitTransaction->getReceiver() === $this) {
+                $receivedBitTransaction->setReceiver(null);
+            }
+        }
 
         return $this;
     }
