@@ -35,10 +35,14 @@ class Post
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: Reaction::class)]
     private Collection $reactions;
 
+    #[ORM\OneToMany(mappedBy: 'post', targetEntity: Like::class, orphanRemoval: true)]
+    private Collection $likes;
+
     public function __construct()
     {
         $this->files = new ArrayCollection();
         $this->reactions = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -148,6 +152,36 @@ class Post
             // set the owning side to null (unless already changed)
             if ($reaction->getPost() === $this) {
                 $reaction->setPost(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Like>
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes->add($like);
+            $like->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): self
+    {
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getPost() === $this) {
+                $like->setPost(null);
             }
         }
 

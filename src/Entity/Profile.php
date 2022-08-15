@@ -46,10 +46,14 @@ class Profile
     #[ORM\OneToMany(mappedBy: 'profile', targetEntity: Reaction::class, orphanRemoval: true)]
     private Collection $reactions;
 
+    #[ORM\OneToMany(mappedBy: 'profile', targetEntity: Like::class)]
+    private Collection $likes;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
         $this->reactions = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -237,6 +241,36 @@ class Profile
             // set the owning side to null (unless already changed)
             if ($reaction->getProfile() === $this) {
                 $reaction->setProfile(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Like>
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes->add($like);
+            $like->setProfile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): self
+    {
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getProfile() === $this) {
+                $like->setProfile(null);
             }
         }
 
