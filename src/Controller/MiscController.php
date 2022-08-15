@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Subscription;
 use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -48,5 +49,23 @@ class MiscController extends AbstractController
         return $this->json([
             'message' => 'Admin user created',
         ]);
+    }
+
+    #[Route('/setup', name: 'setup', methods: ['GET'])]
+    public function setup(ManagerRegistry $doctrine)
+    {
+        $basicSubscriptionExists = !empty($doctrine->getRepository(Subscription::class)->findOneBy(['name' => 'Basic']));
+        if (!$basicSubscriptionExists) {
+            $basicSubscription = new Subscription();
+            $basicSubscription->setName('Basic');
+            $basicSubscription->setPrice(5);
+        }
+
+        $advancedSubscriptionExists = !empty($doctrine->getRepository(Subscription::class)->findOneBy(['name' => 'Advanced']));
+        if (!$advancedSubscriptionExists) {
+            $basicSubscription = new Subscription();
+            $basicSubscription->setName('Advanced');
+            $basicSubscription->setPrice(10);
+        }
     }
 }
