@@ -26,6 +26,10 @@ class CodeLanguageSkill
     #[ORM\Column]
     private ?int $projects = null;
 
+    #[ORM\ManyToOne(inversedBy: 'code_languages')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?CodingProfile $codingProfile = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +79,18 @@ class CodeLanguageSkill
     public function setProjects(int $projects): self
     {
         $this->projects = $projects;
+
+        return $this;
+    }
+
+    public function getCodingProfile(): ?CodingProfile
+    {
+        return $this->codingProfile;
+    }
+
+    public function setCodingProfile(?CodingProfile $codingProfile): self
+    {
+        $this->codingProfile = $codingProfile;
 
         return $this;
     }
