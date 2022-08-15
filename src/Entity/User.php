@@ -39,6 +39,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $verified = null;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Subscription $subscription = null;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Invitation $invitation = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -153,6 +159,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setVerified(bool $verified): self
     {
         $this->verified = $verified;
+
+        return $this;
+    }
+
+    public function getSubscription(): ?Subscription
+    {
+        return $this->subscription;
+    }
+
+    public function setSubscription(?Subscription $subscription): self
+    {
+        $this->subscription = $subscription;
+
+        return $this;
+    }
+
+    public function getInvitation(): ?Invitation
+    {
+        return $this->invitation;
+    }
+
+    public function setInvitation(?Invitation $invitation): self
+    {
+        $this->invitation = $invitation;
 
         return $this;
     }
