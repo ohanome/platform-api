@@ -37,6 +37,9 @@ class File
     #[ORM\Column(nullable: true)]
     private ?float $length = null;
 
+    #[ORM\ManyToOne(inversedBy: 'files')]
+    private ?Post $post = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -134,6 +137,18 @@ class File
     public function setLength(?float $length): self
     {
         $this->length = $length;
+
+        return $this;
+    }
+
+    public function getPost(): ?Post
+    {
+        return $this->post;
+    }
+
+    public function setPost(?Post $post): self
+    {
+        $this->post = $post;
 
         return $this;
     }
