@@ -49,11 +49,15 @@ class Profile
     #[ORM\OneToMany(mappedBy: 'profile', targetEntity: Like::class)]
     private Collection $likes;
 
+    #[ORM\OneToMany(mappedBy: 'profile', targetEntity: Bookmark::class, orphanRemoval: true)]
+    private Collection $bookmarks;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
         $this->reactions = new ArrayCollection();
         $this->likes = new ArrayCollection();
+        $this->bookmarks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -271,6 +275,36 @@ class Profile
             // set the owning side to null (unless already changed)
             if ($like->getProfile() === $this) {
                 $like->setProfile(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Bookmark>
+     */
+    public function getBookmarks(): Collection
+    {
+        return $this->bookmarks;
+    }
+
+    public function addBookmark(Bookmark $bookmark): self
+    {
+        if (!$this->bookmarks->contains($bookmark)) {
+            $this->bookmarks->add($bookmark);
+            $bookmark->setProfile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBookmark(Bookmark $bookmark): self
+    {
+        if ($this->bookmarks->removeElement($bookmark)) {
+            // set the owning side to null (unless already changed)
+            if ($bookmark->getProfile() === $this) {
+                $bookmark->setProfile(null);
             }
         }
 
