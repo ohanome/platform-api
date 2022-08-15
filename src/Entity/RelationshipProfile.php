@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+use App\Option\RelationshipStatus;
+use App\Option\RelationshipType;
+use App\Option\Sexuality;
 use App\Repository\RelationshipProfileRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -50,6 +53,10 @@ class RelationshipProfile
 
     public function setStatus(?string $status): self
     {
+        if (!empty($status) && !RelationshipStatus::isValid($status)) {
+            $status = RelationshipStatus::Single->value;
+        }
+
         $this->status = $status;
 
         return $this;
@@ -62,6 +69,10 @@ class RelationshipProfile
 
     public function setType(?string $type): self
     {
+        if (!empty($type) && !RelationshipType::isValid($type)) {
+            $type = RelationshipType::Monogamy->value;
+        }
+
         $this->type = $type;
 
         return $this;
@@ -74,6 +85,10 @@ class RelationshipProfile
 
     public function setSexuality(?string $sexuality): self
     {
+        if (!empty($sexuality) && !Sexuality::isValid($sexuality)) {
+            $sexuality = Sexuality::Heterosexual->value;
+        }
+
         $this->sexuality = $sexuality;
 
         return $this;

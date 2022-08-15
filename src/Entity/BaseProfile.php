@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Option\Gender;
 use App\Repository\BaseProfileRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -132,6 +133,10 @@ class BaseProfile
 
     public function setGender(?string $gender): self
     {
+        if (!empty($gender) && !Gender::isValid($gender)) {
+            $gender = Gender::Secret->value;
+        }
+
         $this->gender = $gender;
 
         return $this;

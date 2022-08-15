@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Option\EmploymentStatus;
 use App\Repository\JobProfileRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -69,6 +70,10 @@ class JobProfile
 
     public function setEmploymentStatus(?string $employment_status): self
     {
+        if (!empty($employment_status) && !EmploymentStatus::isValid($employment_status)) {
+            $employment_status = EmploymentStatus::FulltimeEmployed->value;
+        }
+
         $this->employment_status = $employment_status;
 
         return $this;

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Option\ProfileType;
 use App\Repository\ProfileRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -321,6 +322,10 @@ class Profile
 
     public function setType(string $type): self
     {
+        if (!ProfileType::isValid($type)) {
+            $type = ProfileType::Personal->value;
+        }
+
         $this->type = $type;
 
         return $this;
