@@ -45,6 +45,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Invitation $invitation = null;
 
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?Verification $verification = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -183,6 +186,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setInvitation(?Invitation $invitation): self
     {
         $this->invitation = $invitation;
+
+        return $this;
+    }
+
+    public function getVerification(): ?Verification
+    {
+        return $this->verification;
+    }
+
+    public function setVerification(?Verification $verification): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($verification === null && $this->verification !== null) {
+            $this->verification->setUser(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($verification !== null && $verification->getUser() !== $this) {
+            $verification->setUser($this);
+        }
+
+        $this->verification = $verification;
 
         return $this;
     }
