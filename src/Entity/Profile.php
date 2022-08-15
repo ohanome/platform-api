@@ -23,6 +23,9 @@ class Profile
     #[ORM\OneToOne(mappedBy: 'profile', cascade: ['persist', 'remove'])]
     private ?BaseProfile $baseProfile = null;
 
+    #[ORM\OneToOne(mappedBy: 'profile', cascade: ['persist', 'remove'])]
+    private ?JobProfile $jobProfile = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -65,6 +68,23 @@ class Profile
         }
 
         $this->baseProfile = $baseProfile;
+
+        return $this;
+    }
+
+    public function getJobProfile(): ?JobProfile
+    {
+        return $this->jobProfile;
+    }
+
+    public function setJobProfile(JobProfile $jobProfile): self
+    {
+        // set the owning side of the relation if necessary
+        if ($jobProfile->getProfile() !== $this) {
+            $jobProfile->setProfile($this);
+        }
+
+        $this->jobProfile = $jobProfile;
 
         return $this;
     }
