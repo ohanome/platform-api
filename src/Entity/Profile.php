@@ -29,6 +29,9 @@ class Profile
     #[ORM\OneToOne(mappedBy: 'profile', cascade: ['persist', 'remove'])]
     private ?SocialMediaProfile $socialMediaProfile = null;
 
+    #[ORM\OneToOne(mappedBy: 'profile', cascade: ['persist', 'remove'])]
+    private ?RelationshipProfile $relationshipProfile = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +108,23 @@ class Profile
         }
 
         $this->socialMediaProfile = $socialMediaProfile;
+
+        return $this;
+    }
+
+    public function getRelationshipProfile(): ?RelationshipProfile
+    {
+        return $this->relationshipProfile;
+    }
+
+    public function setRelationshipProfile(RelationshipProfile $relationshipProfile): self
+    {
+        // set the owning side of the relation if necessary
+        if ($relationshipProfile->getProfile() !== $this) {
+            $relationshipProfile->setProfile($this);
+        }
+
+        $this->relationshipProfile = $relationshipProfile;
 
         return $this;
     }
