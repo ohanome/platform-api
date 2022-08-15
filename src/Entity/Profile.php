@@ -32,6 +32,9 @@ class Profile
     #[ORM\OneToOne(mappedBy: 'profile', cascade: ['persist', 'remove'])]
     private ?RelationshipProfile $relationshipProfile = null;
 
+    #[ORM\OneToOne(mappedBy: 'profile', cascade: ['persist', 'remove'])]
+    private ?GamingProfile $gamingProfile = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -125,6 +128,23 @@ class Profile
         }
 
         $this->relationshipProfile = $relationshipProfile;
+
+        return $this;
+    }
+
+    public function getGamingProfile(): ?GamingProfile
+    {
+        return $this->gamingProfile;
+    }
+
+    public function setGamingProfile(GamingProfile $gamingProfile): self
+    {
+        // set the owning side of the relation if necessary
+        if ($gamingProfile->getProfile() !== $this) {
+            $gamingProfile->setProfile($this);
+        }
+
+        $this->gamingProfile = $gamingProfile;
 
         return $this;
     }
