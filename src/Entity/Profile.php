@@ -20,6 +20,9 @@ class Profile
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\OneToOne(mappedBy: 'profile', cascade: ['persist', 'remove'])]
+    private ?BaseProfile $baseProfile = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,6 +48,23 @@ class Profile
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getBaseProfile(): ?BaseProfile
+    {
+        return $this->baseProfile;
+    }
+
+    public function setBaseProfile(BaseProfile $baseProfile): self
+    {
+        // set the owning side of the relation if necessary
+        if ($baseProfile->getProfile() !== $this) {
+            $baseProfile->setProfile($this);
+        }
+
+        $this->baseProfile = $baseProfile;
 
         return $this;
     }
