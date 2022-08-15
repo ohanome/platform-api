@@ -52,6 +52,9 @@ class Profile
     #[ORM\OneToMany(mappedBy: 'profile', targetEntity: Bookmark::class, orphanRemoval: true)]
     private Collection $bookmarks;
 
+    #[ORM\Column(length: 255)]
+    private ?string $type = null;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -307,6 +310,18 @@ class Profile
                 $bookmark->setProfile(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }
