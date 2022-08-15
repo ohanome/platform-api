@@ -11,4 +11,15 @@ enum Sexuality: string {
     case Asexual = "Asexual";
     case Secret = "Secret";
     case Other = "Other";
+
+    public static function isValid(string $value): bool
+    {
+        foreach (self::cases() as $case) {
+            if ($case->value === $value) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

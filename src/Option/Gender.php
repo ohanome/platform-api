@@ -9,4 +9,15 @@ enum Gender: string {
     case Transgender = "transgender";
     case Secret = "secret";
     case Other = "other";
+
+    public static function isValid(string $value): bool
+    {
+        foreach (self::cases() as $case) {
+            if ($case->value === $value) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

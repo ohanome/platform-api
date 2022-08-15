@@ -9,4 +9,15 @@ enum ProfileType: string {
     case Musician = "musician";
     case Influencer = "influencer";
     case Streamer = "streamer";
+
+    public static function isValid(string $value): bool
+    {
+        foreach (self::cases() as $case) {
+            if ($case->value === $value) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
