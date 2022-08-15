@@ -32,9 +32,13 @@ class Post
     #[ORM\OneToOne(targetEntity: self::class, cascade: ['persist', 'remove'])]
     private ?self $parent_post = null;
 
+    #[ORM\OneToMany(mappedBy: 'post', targetEntity: Reaction::class)]
+    private Collection $reactions;
+
     public function __construct()
     {
         $this->files = new ArrayCollection();
+        $this->reactions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -116,6 +120,36 @@ class Post
     public function setParentPost(?self $parent_post): self
     {
         $this->parent_post = $parent_post;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reaction>
+     */
+    public function getReactions(): Collection
+    {
+        return $this->reactions;
+    }
+
+    public function addReaction(Reaction $reaction): self
+    {
+        if (!$this->reactions->contains($reaction)) {
+            $this->reactions->add($reaction);
+            $reaction->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReaction(Reaction $reaction): self
+    {
+        if ($this->reactions->removeElement($reaction)) {
+            // set the owning side to null (unless already changed)
+            if ($reaction->getPost() === $this) {
+                $reaction->setPost(null);
+            }
+        }
 
         return $this;
     }
