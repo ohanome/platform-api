@@ -61,6 +61,9 @@ class Verification
     #[ORM\OneToMany(mappedBy: 'verification', targetEntity: VerificationComment::class, orphanRemoval: true)]
     private Collection $comments;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?File $video = null;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -265,6 +268,18 @@ class Verification
                 $comment->setVerification(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getVideo(): ?File
+    {
+        return $this->video;
+    }
+
+    public function setVideo(?File $video): self
+    {
+        $this->video = $video;
 
         return $this;
     }
