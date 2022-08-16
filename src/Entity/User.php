@@ -69,6 +69,9 @@ class User extends EntityBase implements UserInterface, PasswordAuthenticatedUse
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updated = null;
 
+    #[ORM\ManyToOne]
+    private ?Profile $activeProfile = null;
+
     public function __construct()
     {
         $this->bitTransactions = new ArrayCollection();
@@ -367,6 +370,18 @@ class User extends EntityBase implements UserInterface, PasswordAuthenticatedUse
     public function setUpdated(\DateTimeInterface $updated): self
     {
         $this->updated = $updated;
+
+        return $this;
+    }
+
+    public function getActiveProfile(): ?Profile
+    {
+        return $this->activeProfile;
+    }
+
+    public function setActiveProfile(?Profile $activeProfile): self
+    {
+        $this->activeProfile = $activeProfile;
 
         return $this;
     }
