@@ -10,6 +10,7 @@
 ###< symfony/framework-bundle ###
 
 /.idea
+deploy.php
 
 ###> lexik/jwt-authentication-bundle ###
 /config/jwt/*.pem
