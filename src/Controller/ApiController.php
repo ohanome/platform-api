@@ -17,4 +17,10 @@ class ApiController extends AbstractController
             'path' => 'src/Controller/ApiController.php',
         ]);
     }
+
+    #[Route('/me', name: 'me', methods: ['GET'])]
+    public function getMe(): JsonResponse
+    {
+        return $this->json($this->getUser());
+    }
 }
