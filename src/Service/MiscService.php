@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Activation;
 use App\Entity\BaseProfile;
 use App\Entity\Profile;
 use App\Entity\User;
@@ -11,7 +12,7 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class MiscService {
 
-    public function __construct(private readonly ManagerRegistry $doctrine)
+    public function __construct(private readonly ManagerRegistry $doctrine, private readonly ActivationService $activationService)
     {
     }
 
@@ -55,6 +56,15 @@ class MiscService {
                 $this->doctrine->getManager()->persist($baseProfile);
                 $createdNewEntities = true;
             }
+        }
+
+        $existingActivation = $this->doctrine->getRepository(Activation::class)->findOneBy(['user' => $user]);
+        if (!$existingActivation) {
+            $this->activationService->createActivationForUser($user);
+            // If no activation has been found for the user, we assume it hasn't been created yet.
+            $user->setActive(false);
+            $this->doctrine->getManager()->persist($user);
+            $createdNewEntities = true;
         }
 
         if ($createdNewEntities) {
