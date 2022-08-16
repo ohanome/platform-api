@@ -2,8 +2,10 @@
 
 namespace App\Service;
 
+use App\Entity\Profile;
 use App\Entity\User;
 use App\Entity\Verification;
+use App\Option\ProfileType;
 use App\Service\Validator\RequestValidator;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,6 +42,11 @@ class UserService
         $verification = new Verification();
         $verification->setUser($user);
         $this->doctrine->getManager()->persist($verification);
+
+        $profile = new Profile();
+        $profile->setUser($user);
+        $profile->setName($user->getUsername());
+        $profile->setType(ProfileType::Personal->value);
 
         $this->doctrine->getManager()->flush();
         return $user;
