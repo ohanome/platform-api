@@ -85,4 +85,23 @@ class MiscController extends AbstractController
             'message' => 'Setup complete',
         ]);
     }
+
+    #[Route('/cleanup', name: 'cleanup', methods: ['GET'])]
+    public function cleanup(ManagerRegistry $doctrine, MiscService $miscService) {
+        $allUsers = $doctrine->getRepository(User::class)->findAll();
+        foreach ($allUsers as $user) {
+            $miscService->createMissingEntities($user);
+            try {
+                $miscService->determineActiveProfile($user);
+            } catch (\Exception $e) {
+                return $this->json([
+                    'message' => $e->getMessage(),
+                ]);
+            }
+        }
+
+        return $this->json([
+            'message' => 'Cleanup complete',
+        ]);
+    }
 }

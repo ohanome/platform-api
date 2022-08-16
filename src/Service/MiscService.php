@@ -15,7 +15,7 @@ class MiscService {
     {
     }
 
-    public function createMissingEntities(User $user)
+    public function createMissingEntities(User $user): void
     {
         $createdNewEntities = false;
         $existingVerification = $this->doctrine->getRepository(Verification::class)->findOneBy(['user' => $user]);
@@ -59,6 +59,28 @@ class MiscService {
 
         if ($createdNewEntities) {
             $this->doctrine->getManager()->flush();
+        }
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function determineActiveProfile(User $user): void
+    {
+        if ($user->getActiveProfile()) {
+            // Since the user already has a profile set as active profile, we can safely return here.
+            return;
+        }
+
+        $personalProfile = $this->doctrine->getRepository(Profile::class)->findOneBy(['user' => $user, 'type' => ProfileType::Personal->value]);
+        if ($personalProfile) {
+            $user->setActiveProfile($personalProfile);
+            $user->setUpdated(new \DateTime());
+            $this->doctrine->getManager()->persist($user);
+            $this->doctrine->getManager()->flush();
+            return;
+        } else {
+            throw new \Exception('No personal profile found for user ' . $user->getUsername());
         }
     }
 
