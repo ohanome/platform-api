@@ -6,6 +6,7 @@ use App\Option\EmploymentStatus;
 use App\Repository\JobProfileRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: JobProfileRepository::class)]
@@ -40,6 +41,12 @@ class JobProfile extends EntityBase
 
     #[ORM\Column(nullable: true)]
     private ?int $salary_expectation = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $created = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $updated = null;
 
     public function __construct()
     {
@@ -165,6 +172,30 @@ class JobProfile extends EntityBase
     public function setSalaryExpectation(?int $salary_expectation): self
     {
         $this->salary_expectation = $salary_expectation;
+
+        return $this;
+    }
+
+    public function getCreated(): ?\DateTimeInterface
+    {
+        return $this->created;
+    }
+
+    public function setCreated(\DateTimeInterface $created): self
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    public function getUpdated(): ?\DateTimeInterface
+    {
+        return $this->updated;
+    }
+
+    public function setUpdated(\DateTimeInterface $updated): self
+    {
+        $this->updated = $updated;
 
         return $this;
     }

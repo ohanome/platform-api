@@ -41,6 +41,12 @@ class Post extends EntityBase
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: Bookmark::class)]
     private Collection $bookmarks;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $created = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $updated = null;
+
     public function __construct()
     {
         $this->files = new ArrayCollection();
@@ -218,6 +224,30 @@ class Post extends EntityBase
                 $bookmark->setPost(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreated(): ?\DateTimeInterface
+    {
+        return $this->created;
+    }
+
+    public function setCreated(\DateTimeInterface $created): self
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    public function getUpdated(): ?\DateTimeInterface
+    {
+        return $this->updated;
+    }
+
+    public function setUpdated(\DateTimeInterface $updated): self
+    {
+        $this->updated = $updated;
 
         return $this;
     }

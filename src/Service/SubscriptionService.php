@@ -83,6 +83,8 @@ class SubscriptionService
                 $subscriptionEntity->setName($subscription['name']);
                 $subscriptionEntity->setPrice($subscription['price']);
                 $subscriptionEntity->setCharacteristics($subscription['characteristics']);
+                $subscriptionEntity->setCreated(new \DateTime());
+                $subscriptionEntity->setUpdated(new \DateTime());
                 $this->doctrine->getManager()->persist($subscriptionEntity);
                 $createdEntities = true;
             }

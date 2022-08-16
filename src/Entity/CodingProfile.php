@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CodingProfileRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CodingProfileRepository::class)]
@@ -33,6 +34,12 @@ class CodingProfile extends EntityBase
 
     #[ORM\ManyToMany(targetEntity: System::class)]
     private Collection $systems;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $created = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $updated = null;
 
     public function __construct()
     {
@@ -143,6 +150,30 @@ class CodingProfile extends EntityBase
     public function removeSystem(System $system): self
     {
         $this->systems->removeElement($system);
+
+        return $this;
+    }
+
+    public function getCreated(): ?\DateTimeInterface
+    {
+        return $this->created;
+    }
+
+    public function setCreated(\DateTimeInterface $created): self
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    public function getUpdated(): ?\DateTimeInterface
+    {
+        return $this->updated;
+    }
+
+    public function setUpdated(\DateTimeInterface $updated): self
+    {
+        $this->updated = $updated;
 
         return $this;
     }

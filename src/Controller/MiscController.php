@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Subscription;
 use App\Entity\User;
+use App\Service\MiscService;
+use App\Service\SubscriptionService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -42,6 +44,8 @@ class MiscController extends AbstractController
         $user->setBits(0);
         $user->setActive(true);
         $user->setVerified(true);
+        $user->setCreated(new \DateTime());
+        $user->setUpdated(new \DateTime());
 
         $doctrine->getManager()->persist($user);
         $doctrine->getManager()->flush();
@@ -52,20 +56,33 @@ class MiscController extends AbstractController
     }
 
     #[Route('/setup', name: 'setup', methods: ['GET'])]
-    public function setup(ManagerRegistry $doctrine)
+    public function setup(ManagerRegistry $doctrine, SubscriptionService $subscriptionService, MiscService $miscService)
     {
-        $basicSubscriptionExists = !empty($doctrine->getRepository(Subscription::class)->findOneBy(['name' => 'Basic']));
-        if (!$basicSubscriptionExists) {
-            $basicSubscription = new Subscription();
-            $basicSubscription->setName('Basic');
-            $basicSubscription->setPrice(5);
+        $subscriptionService->setupSubscriptions();
+        $allUsers = $doctrine->getRepository(User::class)->findAll();
+        foreach ($allUsers as $user) {
+            $miscService->createMissingEntities($user);
         }
 
-        $advancedSubscriptionExists = !empty($doctrine->getRepository(Subscription::class)->findOneBy(['name' => 'Advanced']));
-        if (!$advancedSubscriptionExists) {
-            $basicSubscription = new Subscription();
-            $basicSubscription->setName('Advanced');
-            $basicSubscription->setPrice(10);
+        /** @var User $adminUser */
+        $adminUser = $doctrine->getRepository(User::class)->findOneBy(['username' => 'admin']);
+        if ($adminUser) {
+            /** @var Subscription $diamondPlusSubscription */
+            $diamondPlusSubscription = $doctrine->getRepository(Subscription::class)->findOneBy(['name' => 'Diamond+']);
+
+            $adminUser->setVerified(true);
+            $adminUser->setActive(true);
+            $adminUser->setBits(1000000000);
+            if ($diamondPlusSubscription) {
+                $adminUser->setSubscription($diamondPlusSubscription);
+            }
+            $adminUser->setUpdated(new \DateTime());
+            $doctrine->getManager()->persist($adminUser);
+            $doctrine->getManager()->flush();
         }
+
+        return $this->json([
+            'message' => 'Setup complete',
+        ]);
     }
 }

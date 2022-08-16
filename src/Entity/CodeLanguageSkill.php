@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CodeLanguageSkillRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CodeLanguageSkillRepository::class)]
@@ -29,6 +30,12 @@ class CodeLanguageSkill extends EntityBase
     #[ORM\ManyToOne(inversedBy: 'code_languages')]
     #[ORM\JoinColumn(nullable: false)]
     private ?CodingProfile $codingProfile = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $created = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $updated = null;
 
     public function getId(): ?int
     {
@@ -91,6 +98,30 @@ class CodeLanguageSkill extends EntityBase
     public function setCodingProfile(?CodingProfile $codingProfile): self
     {
         $this->codingProfile = $codingProfile;
+
+        return $this;
+    }
+
+    public function getCreated(): ?\DateTimeInterface
+    {
+        return $this->created;
+    }
+
+    public function setCreated(\DateTimeInterface $created): self
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    public function getUpdated(): ?\DateTimeInterface
+    {
+        return $this->updated;
+    }
+
+    public function setUpdated(\DateTimeInterface $updated): self
+    {
+        $this->updated = $updated;
 
         return $this;
     }

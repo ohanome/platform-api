@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserSettingsRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserSettingsRepository::class)]
@@ -19,6 +20,12 @@ class UserSettings extends EntityBase
 
     #[ORM\Column]
     private array $settings = [];
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $created = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $updated = null;
 
     public function getId(): ?int
     {
@@ -45,6 +52,30 @@ class UserSettings extends EntityBase
     public function setSettings(array $settings): self
     {
         $this->settings = $settings;
+
+        return $this;
+    }
+
+    public function getCreated(): ?\DateTimeInterface
+    {
+        return $this->created;
+    }
+
+    public function setCreated(\DateTimeInterface $created): self
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    public function getUpdated(): ?\DateTimeInterface
+    {
+        return $this->updated;
+    }
+
+    public function setUpdated(\DateTimeInterface $updated): self
+    {
+        $this->updated = $updated;
 
         return $this;
     }

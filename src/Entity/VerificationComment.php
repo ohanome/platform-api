@@ -25,6 +25,12 @@ class VerificationComment extends EntityBase
     #[ORM\JoinColumn(nullable: false)]
     private ?Verification $verification = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $created = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $updated = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -62,6 +68,30 @@ class VerificationComment extends EntityBase
     public function setVerification(?Verification $verification): self
     {
         $this->verification = $verification;
+
+        return $this;
+    }
+
+    public function getCreated(): ?\DateTimeInterface
+    {
+        return $this->created;
+    }
+
+    public function setCreated(\DateTimeInterface $created): self
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    public function getUpdated(): ?\DateTimeInterface
+    {
+        return $this->updated;
+    }
+
+    public function setUpdated(\DateTimeInterface $updated): self
+    {
+        $this->updated = $updated;
 
         return $this;
     }

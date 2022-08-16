@@ -6,6 +6,7 @@ use App\Option\RelationshipStatus;
 use App\Option\RelationshipType;
 use App\Option\Sexuality;
 use App\Repository\RelationshipProfileRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RelationshipProfileRepository::class)]
@@ -28,6 +29,12 @@ class RelationshipProfile extends EntityBase
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $sexuality = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $created = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $updated = null;
 
     public function getId(): ?int
     {
@@ -90,6 +97,30 @@ class RelationshipProfile extends EntityBase
         }
 
         $this->sexuality = $sexuality;
+
+        return $this;
+    }
+
+    public function getCreated(): ?\DateTimeInterface
+    {
+        return $this->created;
+    }
+
+    public function setCreated(\DateTimeInterface $created): self
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    public function getUpdated(): ?\DateTimeInterface
+    {
+        return $this->updated;
+    }
+
+    public function setUpdated(\DateTimeInterface $updated): self
+    {
+        $this->updated = $updated;
 
         return $this;
     }
