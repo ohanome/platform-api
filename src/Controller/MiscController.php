@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Subscription;
 use App\Entity\User;
+use App\Service\AuditService;
 use App\Service\MiscService;
 use App\Service\SubscriptionService;
 use Doctrine\Persistence\ManagerRegistry;
@@ -25,7 +26,7 @@ class MiscController extends AbstractController
     }
 
     #[Route('/create-admin-user', name: 'create_admin_user', methods: ['GET'])]
-    public function createAdminUser(ManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHasher): JsonResponse
+    public function createAdminUser(ManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHasher, AuditService $auditService): JsonResponse
     {
         $userExists = !empty($doctrine->getRepository(User::class)->findOneBy(['username' => 'admin']));
 
@@ -49,6 +50,7 @@ class MiscController extends AbstractController
 
         $doctrine->getManager()->persist($user);
         $doctrine->getManager()->flush();
+        $auditService->new('Created admin user', $this->getUser());
 
         return $this->json([
             'message' => 'Admin user created',
@@ -56,7 +58,12 @@ class MiscController extends AbstractController
     }
 
     #[Route('/setup', name: 'setup', methods: ['GET'])]
-    public function setup(ManagerRegistry $doctrine, SubscriptionService $subscriptionService, MiscService $miscService)
+    public function setup(
+        ManagerRegistry $doctrine,
+        SubscriptionService $subscriptionService,
+        MiscService $miscService,
+        AuditService $auditService
+    ): JsonResponse
     {
         $subscriptionService->setupSubscriptions();
         $allUsers = $doctrine->getRepository(User::class)->findAll();
@@ -81,13 +88,15 @@ class MiscController extends AbstractController
             $doctrine->getManager()->flush();
         }
 
+        $auditService->new('Triggered setup', $this->getUser());
+
         return $this->json([
             'message' => 'Setup complete',
         ]);
     }
 
     #[Route('/cleanup', name: 'cleanup', methods: ['GET'])]
-    public function cleanup(ManagerRegistry $doctrine, MiscService $miscService) {
+    public function cleanup(ManagerRegistry $doctrine, MiscService $miscService, AuditService $auditService): JsonResponse {
         $allUsers = $doctrine->getRepository(User::class)->findAll();
         foreach ($allUsers as $user) {
             $miscService->createMissingEntities($user);
@@ -99,6 +108,8 @@ class MiscController extends AbstractController
                 ]);
             }
         }
+
+        $auditService->new('Triggered cleanup', $this->getUser());
 
         return $this->json([
             'message' => 'Cleanup complete',
