@@ -133,13 +133,13 @@
                                                     <div style="font-size: 14px; mso-line-height-alt: 16.8px; color: #555555; line-height: 1.2; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;">
                                                         <p style="margin: 0; font-size: 14px;">
                                                             {% block footer %}
-                                                                {% trans %}
-                                                                    --<br />
-                                                                    <br />
-                                                                    The ohano team.<br />
-                                                                    <br />
-                                                                    <a href="https://ohano.me">ohano</a>
-                                                                {% endtrans %}
+                                                                --<br />
+                                                                <br />
+                                                                {{ 'mail.signature.greeting' }}<br />
+                                                                <br />
+                                                                <a href="https://ohano.me">ohano</a><br />
+                                                                <br />
+                                                                {{ 'support.plain'|trans }}: <a href="mailto:help@ohano.me">help@ohano.me</a><br />
                                                             {% endblock footer %}
                                                         </p>
                                                     </div>

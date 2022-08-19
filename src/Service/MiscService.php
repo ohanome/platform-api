@@ -77,18 +77,36 @@ class MiscService {
      */
     public function determineActiveProfile(User $user): void
     {
-        if ($user->getActiveProfile()) {
+        $activeProfile = null;
+        /** @var Profile[] $activeProfiles */
+        $activeProfiles = $this->doctrine->getRepository(Profile::class)->findBy(['user' => $user, 'isActive' => true]);
+        if (count($activeProfiles) > 1) {
+            foreach ($activeProfiles as $index => $profile) {
+                if ($index == 0) {
+                    // Keep the first found active profile as active.
+                    continue;
+                }
+                $profile->setIsActive(false);
+                $this->doctrine->getManager()->persist($profile);
+                $this->doctrine->getManager()->flush();
+                unset($activeProfiles[$index]);
+            }
+
+            $activeProfile = $activeProfiles[0];
+        } else if (count($activeProfiles) == 1) {
+            $activeProfile = $activeProfiles[0];
+        }
+
+        if ($activeProfile) {
             // Since the user already has a profile set as active profile, we can safely return here.
             return;
         }
 
         $personalProfile = $this->doctrine->getRepository(Profile::class)->findOneBy(['user' => $user, 'type' => ProfileType::Personal->value]);
         if ($personalProfile) {
-            $user->setActiveProfile($personalProfile);
-            $user->setUpdated(new \DateTime());
-            $this->doctrine->getManager()->persist($user);
+            $personalProfile->setIsActive(true);
+            $this->doctrine->getManager()->persist($personalProfile);
             $this->doctrine->getManager()->flush();
-            return;
         } else {
             throw new \Exception('No personal profile found for user ' . $user->getUsername());
         }

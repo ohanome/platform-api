@@ -32,8 +32,59 @@
 |        - |            - |         05 |   2105    | Method must be HEAD          |
 |        - |            - |         06 |   2106    | Method must be PUT           |
 
+---
+
 ## API
 
-### Miscellaneous
+The below listed endpoints are always following the schema `{host}/{lang}/{endpoint}`.
+- The `{host}` is the hostname of the platform. This is either one of the deployed stages or your local URL.
+- The `{lang}` is the language of the platform. For a full list of available languages, see the [defined languages](./config/routes.yaml).
+- The `{endpoint}` is the endpoint of the API.
 
-`/api/{lang}/misc/`
+For example, if you are looking at the endpoint `/misc/` the full endpoint will be `{host}/{lang}/misc/`.
+
+The sections below are following the file and directory structure. If you find a MiscController for example under `src/Controller/MiscController.php`, its endpoints are listed under the "[Miscellaneous](#miscellaneous-misccontrollersrccontrollermisccontrollerphp)" section.
+
+### Miscellaneous ([MiscController](src/Controller/MiscController.php))
+
+#### Index
+
+Path: `/misc/`  
+Description: Useless index endpoint.  
+Methods: `GET`, `POST`, `PATCH`, `DELETE`, `HEAD`, `PUT`  
+Params:  
+_n/a_  
+Body:  
+_n/a_  
+Response:  
+_Default controller body_
+
+#### Create admin user
+
+**Path**: `/misc/create-admin-user`  
+**Description**: Creates an admin user if it does'nt exist. Username and Password initially is `admin` and of course needs to be changed later.  
+**Methods**: `GET`  
+**Params**:  
+
+| Param  | Type     | Description                                                                                                 |
+|--------|----------|-------------------------------------------------------------------------------------------------------------|
+| `lang` | `string` | Language of the response. For a list of language Options have a look at [routes.yaml](./config/routes.yaml) |
+
+**Response**:  
+Code: `200`  
+```json
+{
+  "message": "Admin user created"
+}
+```
+
+If the admin user already exists:
+
+
+
+
+| Key    | Value                            |
+|--------|----------------------------------|
+| Path   | `/api/{lang}/misc/`              |
+| Method | `GET`, `POST`, `PATCH`, `DELETE` |
+| Params | `lang`                           |

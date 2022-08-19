@@ -77,9 +77,11 @@ error:
           message: 'Dein Account ist noch nicht verifiziert.'
           description: 'Du musst deinen Account zuerst verifizieren. Falls du Hilfe dabei benötigst, kannst du dich an unseren Support wenden, indem du uns entweder auf Discord oder per E-Mail kontaktierst.'
 mail:
+  signature:
+    greeting: 'Das Team von ohano.'
   user:
     activation:
-      link_broken: 'Falls der Link nicht funktioniert, versuche ihn in zu kopieren und direkt in deinem Browser aufzurufen. Wenn das auch nicht hilft, kontaktiere bitte den Support: <a href="mailto:help@ohano.me>help@ohano.me</a>'
+      link_broken: 'Falls der Link nicht funktioniert, versuche ihn in zu kopieren und direkt in deinem Browser aufzurufen. Wenn das auch nicht hilft, kontaktiere bitte den Support.'
       task: 'um diesen Schritt der Registrierung abzuschließen, musst du deine E-Mail-Adresse bestätigen, indem du auf den folgenden Link klickst.'
 user:
   account:
@@ -93,3 +95,6 @@ user:
     activated: 'Das Konto wurde erfolgreich aktiviert.'
 test:
   locale: 'Deutsch wurde als Sprache erkannt.'
+support:
+  # Like in "Support: help@ohano.me"
+  plain: 'Support'

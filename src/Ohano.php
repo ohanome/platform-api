@@ -26,4 +26,8 @@ class Ohano
     const FLAG_MUST_BE_VERIFIED = 2;
     const FLAG_MUST_BE_MODERATOR = 4;
     const FLAG_MUST_BE_ADMIN = 8;
+
+    const USERNAME_MIN_LENGTH = 6;
+    const USERNAME_MAX_LENGTH = 20;
+    const USERNAME_REGEX = '/^[a-zA-Z\d_\-]+$/';
 }

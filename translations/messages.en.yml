@@ -1,13 +1,100 @@
 # Important note: Keep the keys in alphabetical order.
-mail:
+error:
+  connection:
+    method:
+      must:
+        be:
+          delete:
+            message: 'Request-Method must be DELETE.'
+            description: 'Check how you are connecting to the API.'
+          get:
+            message: 'Request-Method must be GET.'
+            description: 'Check how you are connecting to the API.'
+          head:
+            message: 'Request-Method must be HEAD.'
+            description: 'Check how you are connecting to the API.'
+          patch:
+            message: 'Request-Method must be PATCH.'
+            description: 'Check how you are connecting to the API.'
+          post:
+            message: 'Request-Method must be POST.'
+            description: 'Check how you are connecting to the API.'
+          put:
+            message: 'Request-Method must be PUT.'
+            description: 'Check how you are connecting to the API.'
   user:
     activation:
-      link_broken: 'If this link does not work, try to copy the link into your browser. If this is not helping, please contact our support: <a href="mailto:help@ohano.me">help@ohano.me</a>'
+      code:
+        invalid:
+          message: 'The activation code is invalid.'
+          description: 'Check if you copied the URL correctly. If you need help, contact the support via email or Discord.'
+        used:
+          message: 'The activation code already has been used.'
+          description: 'If your account has not been activated yet, a new code for you has to be created. Please contact the support via email or Discord.'
+      user:
+        invalid:
+          message: 'The activation code is invalid.'
+          description: 'Check if you copied the URL correctly. If you need help, contact the support via email or Discord.'
+    email:
+      already_exists:
+        message: 'This email address is already registered.'
+        description: 'You can not register with this email address. Try with another email address.'
+      invalid:
+        message: 'This email address is invalid.'
+        description: 'Please check if you have entered the email address correctly.'
+      missing:
+        message: 'The email address is missing.'
+        description: 'Please enter a valid email address.'
+    not_found:
+      message: 'This user has not been found.'
+      description: 'Please check if you have entered the username correctly. Maybe the user you are looking for does not exist.'
+    password:
+      missing:
+        message: 'The password is missing.'
+        description: 'The password is required.'
+    username:
+      already_exists:
+        message: 'This username is already taken.'
+        description: 'Please choose another username.'
+      blocked:
+        message: 'This username is blocked.'
+        description: 'Please choose another username.'
+      invalid:
+        message: 'This username is invalid.'
+        description: 'Please check if you are using any invalid characters. Allowed characters are: a-z, A-Z, 0-9, "-", "_", ".".'
+    you:
+      account:
+        already_activated:
+          message: 'Your account already is activated.'
+          description: 'You can only activate your account once.'
+        already_verified:
+          message: 'Your account already is verified.'
+          description: 'You can only verify your account once.'
+        not_activated:
+          message: 'Your account is not activated yet.'
+          description: 'You need to activate your account to proceed. If you need help at this point, please contact the support via email or on Discord.'
+        not_verified:
+          message: 'Your account is not verified yet.'
+          description: 'You need to verify your account to proceed. If you need help at this point, please contact the support via email or on Discord.'
+mail:
+  signature:
+    greeting: 'The ohano team.'
+  user:
+    activation:
+      link_broken: 'If this link does not work, try to copy the link into your browser. If this is not helping, please contact our support.'
       task: 'to complete this step of your account registration, you need to verify your email address by clicking on the link below. You cannot log in until you successfully activated your account.'
 user:
   account:
     activation: 'Account activation'
-  not_activated: 'User is not activated'
-  not_verified: 'User is not verified'
+    # Contains all messages directly addressed to the user
+    you:
+      already_activated: 'Your account already is activated.'
+      already_verified: 'Your account already is verified.'
+      not_activated: 'Your account is not activated yet.'
+      not_verified: 'Your account is not verified yet.'
+    activated: 'Your account has been activated.'
 test:
   locale: 'English was detected as language.'
+support:
+  # Like in "Support: help@ohano.me"
+  plain: 'Support'

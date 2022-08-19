@@ -4,7 +4,6 @@ namespace App\Mail;
 
 use PHPMailer\PHPMailer\PHPMailer;
 use Twig\Environment;
-use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
 
 class OhanoMailer extends PHPMailer
 {
@@ -13,24 +12,26 @@ class OhanoMailer extends PHPMailer
      */
     private string $templateName;
 
-    public function __construct(OhanoMail $mail, bool $exceptions = null)
+    public function __construct(OhanoMail $mail, string $host, string $user, string $password, string $address, int $port, bool $exceptions = null, $enableSmtp = true)
     {
         $this->templateName = $mail->value;
         $this->isHTML();
 
-        $this->Host = env('SMTP_HOST');
-        $this->Username = env('SMTP_USER');
-        $this->From = env('SMTP_ADDRESS');
-        $this->Sender = env('SMTP_ADDRESS');
+        $this->Host = $host;
+        $this->Username = $user;
+        $this->From = $address;
+        $this->Sender = $address;
         $this->FromName = 'ohano';
-        $this->Password = env('SMTP_PASS');
+        $this->Password = $password;
         $this->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $this->Port = env('SMTP_PORT');
+        $this->Port = $port;
 
         parent::__construct($exceptions);
 
-        $this->isSMTP();
-        $this->SMTPAuth = true;
+        if ($enableSmtp) {
+            $this->isSMTP();
+            $this->SMTPAuth = true;
+        }
     }
 
     /**

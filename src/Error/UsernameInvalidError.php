@@ -11,11 +11,11 @@ class UsernameInvalidError implements ErrorInterface
 
     public static function getMessage(): string
     {
-        return 'error.username.invalid.message';
+        return 'error.user.username.invalid.message';
     }
 
     public static function getDescription(): string
     {
-        return 'error.username.invalid.description';
+        return 'error.user.username.invalid.description';
     }
 }

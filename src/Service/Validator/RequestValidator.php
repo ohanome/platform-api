@@ -55,7 +55,10 @@ class RequestValidator
             $errors[] = new UsernameBlockedError();
         }
 
-        if (count(str_split($data['username'])) < 6 || count(str_split($data['username'])) > 20 || !preg_match('/^[a-zA-Z\d_\-]+$/', $data['username'])) {
+        if (
+            count(str_split($data['username'])) < Ohano::USERNAME_MIN_LENGTH ||
+            count(str_split($data['username'])) > Ohano::USERNAME_MAX_LENGTH ||
+            !preg_match(Ohano::USERNAME_REGEX, $data['username'])) {
             $errors[] = new UsernameInvalidError();
         }
 

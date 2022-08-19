@@ -27,7 +27,8 @@ class UserService
         private readonly ManagerRegistry $doctrine,
         private readonly MiscService $miscService,
         private readonly Environment $twig,
-        private readonly TranslatorInterface $translator
+        private readonly TranslatorInterface $translator,
+        private readonly ActivationService $activationService,
     )
     {
     }
@@ -68,43 +69,10 @@ class UserService
         $this->doctrine->getManager()->persist($user);
 
         $this->doctrine->getManager()->flush();
-        $this->sendActivationMail();
+        $this->activationService->createActivationForUser($user);
 
         $this->miscService->createMissingEntities($user);
 
         return $user;
-    }
-
-    /**
-     * @throws Exception
-     * @throws SyntaxError
-     * @throws RuntimeError
-     * @throws LoaderError
-     * @throws MissingAccountActivationException
-     */
-    public function buildActivationMail(User $user): OhanoMailer
-    {
-        /** @var Activation $activation */
-        $activation = $this->doctrine->getRepository(Ohano::class)->findOneBy(['user' => $user]);
-        if (!$activation) {
-            throw new MissingAccountActivationException('No activation found for user');
-        }
-        $mail = new OhanoMailer(OhanoMail::AccountActivation);
-        $mail->addAddress($user->getEmail());
-        $mail->Subject = $this->translator->trans('user.account.activation') . ' - ohano';
-        $mail->renderBody($this->twig, [
-            'username' => $user,
-            'link' => env('FRONTEND_URL') . '/activate/' . $activation->getCode(),
-        ]);
-        return $mail;
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function sendActivationMail(): void
-    {
-        $mail = new OhanoMailer(OhanoMail::AccountActivation);
-        $mail->send();
     }
 }

@@ -13,7 +13,7 @@ class ErrorService
 
     public function buildErrorMessage(ErrorInterface $error): string
     {
-        return 'ERROR ' - $error->getCode() . ' - ' . $this->translator->trans($error->getMessage());
+        return 'ERROR ' . $error->getCode() . ' - ' . $this->translator->trans($error->getMessage());
     }
 
     /**

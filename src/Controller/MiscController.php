@@ -8,7 +8,6 @@ use App\Service\AuditService;
 use App\Service\MiscService;
 use App\Service\SubscriptionService;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -16,15 +15,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route("/misc", name: 'app_misc_')]
-class MiscController extends AbstractController
+class MiscController extends ControllerBase
 {
     #[Route('/', name: 'index')]
     public function index(): JsonResponse
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/MiscController.php',
-        ]);
+        return $this->sendJson('Misc index');
     }
 
     #[Route('/create-admin-user', name: 'create_admin_user', methods: ['GET'])]
@@ -33,9 +29,7 @@ class MiscController extends AbstractController
         $userExists = !empty($doctrine->getRepository(User::class)->findOneBy(['username' => 'admin']));
 
         if ($userExists) {
-            return $this->json([
-                'message' => 'Admin user already exists',
-            ]);
+            return $this->sendJson('Admin user already exists');
         }
         $user = new User();
         $user->setUsername('admin');
@@ -54,9 +48,7 @@ class MiscController extends AbstractController
         $doctrine->getManager()->flush();
         $auditService->new('Created admin user', $this->getUser());
 
-        return $this->json([
-            'message' => 'Admin user created',
-        ]);
+        return $this->sendJson('Admin user created');
     }
 
     #[Route('/setup', name: 'setup', methods: ['GET'])]
@@ -92,9 +84,7 @@ class MiscController extends AbstractController
 
         $auditService->new('Triggered setup', $this->getUser());
 
-        return $this->json([
-            'message' => 'Setup complete',
-        ]);
+        return $this->sendJson('Setup completed');
     }
 
     #[Route('/cleanup', name: 'cleanup', methods: ['GET'])]
@@ -105,25 +95,20 @@ class MiscController extends AbstractController
             try {
                 $miscService->determineActiveProfile($user);
             } catch (\Exception $e) {
-                return $this->json([
-                    'message' => $e->getMessage(),
-                ]);
+                return $this->sendJson($e->getMessage(), errors: [$e->getMessage()]);
             }
         }
 
         $auditService->new('Triggered cleanup', $this->getUser());
 
-        return $this->json([
-            'message' => 'Cleanup complete',
-        ]);
+        return $this->sendJson('Cleanup completed');
     }
 
     #[Route('/locale-test', name: 'locale_test', methods: ['GET'])]
     public function localeTest(Request $request, TranslatorInterface $translator): JsonResponse
     {
-        return $this->json([
-            'message' => $translator->trans('test.locale'),
-            'determined locale' => $request->getLocale(),
+        return $this->sendJson($translator->trans('test.locale'), data: [
+            'determined_locale' => $request->getLocale()
         ]);
     }
 }

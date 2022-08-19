@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use App\Controller\ControllerBase;
 use App\Entity\Activation;
 use App\Entity\User;
 use App\Error\ActivationCodeInvalidError;
@@ -13,27 +14,26 @@ use App\Service\Validator\RequestValidator;
 use Doctrine\Persistence\ManagerRegistry;
 use PHPMailer\PHPMailer\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/api/user', name: 'app_api_user_')]
-class UserController extends AbstractController
+class UserController extends ControllerBase
 {
     #[Route('/', name: 'all', methods: ['GET'])]
     #[IsGranted('ROLE_ADMIN')]
     public function getAll(ManagerRegistry $doctrine): JsonResponse
     {
         $allUsers = $doctrine->getRepository(User::class)->findAll();
-        return $this->json($allUsers);
+        return $this->sendJson('All users', data: $allUsers);
     }
 
     #[Route('/{id}', name: 'one', methods: ['GET'])]
     public function getOneById(User $user): JsonResponse
     {
-        return $this->json($user);
+        return $this->sendJson('User', data: $user);
     }
 
     #[Route('/', name: 'create', methods: ['POST'])]
