@@ -48,36 +48,11 @@ class User extends EntityBase implements UserInterface, PasswordAuthenticatedUse
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Invitation $invitation = null;
 
-    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
-    private ?Verification $verification = null;
-
-    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
-    private ?UserSettings $userSettings = null;
-
-    #[ORM\OneToMany(mappedBy: 'sender', targetEntity: BitTransaction::class)]
-    private Collection $bitTransactions;
-
-    #[ORM\OneToMany(mappedBy: 'receiver', targetEntity: BitTransaction::class)]
-    private Collection $receivedBitTransactions;
-
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Profile::class, orphanRemoval: true)]
-    private Collection $profiles;
-
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $created = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updated = null;
-
-    #[ORM\ManyToOne]
-    private ?Profile $activeProfile = null;
-
-    public function __construct()
-    {
-        $this->bitTransactions = new ArrayCollection();
-        $this->receivedBitTransactions = new ArrayCollection();
-        $this->profiles = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -221,135 +196,6 @@ class User extends EntityBase implements UserInterface, PasswordAuthenticatedUse
         return $this;
     }
 
-    public function getVerification(): ?Verification
-    {
-        return $this->verification;
-    }
-
-    public function setVerification(?Verification $verification): self
-    {
-        // unset the owning side of the relation if necessary
-        if ($verification === null && $this->verification !== null) {
-            $this->verification->setUser(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($verification !== null && $verification->getUser() !== $this) {
-            $verification->setUser($this);
-        }
-
-        $this->verification = $verification;
-
-        return $this;
-    }
-
-    public function getUserSettings(): ?UserSettings
-    {
-        return $this->userSettings;
-    }
-
-    public function setUserSettings(UserSettings $userSettings): self
-    {
-        // set the owning side of the relation if necessary
-        if ($userSettings->getUser() !== $this) {
-            $userSettings->setUser($this);
-        }
-
-        $this->userSettings = $userSettings;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, BitTransaction>
-     */
-    public function getBitTransactions(): Collection
-    {
-        return $this->bitTransactions;
-    }
-
-    public function addBitTransaction(BitTransaction $bitTransaction): self
-    {
-        if (!$this->bitTransactions->contains($bitTransaction)) {
-            $this->bitTransactions->add($bitTransaction);
-            $bitTransaction->setSender($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBitTransaction(BitTransaction $bitTransaction): self
-    {
-        if ($this->bitTransactions->removeElement($bitTransaction)) {
-            // set the owning side to null (unless already changed)
-            if ($bitTransaction->getSender() === $this) {
-                $bitTransaction->setSender(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, BitTransaction>
-     */
-    public function getReceivedBitTransactions(): Collection
-    {
-        return $this->receivedBitTransactions;
-    }
-
-    public function addReceivedBitTransaction(BitTransaction $receivedBitTransaction): self
-    {
-        if (!$this->receivedBitTransactions->contains($receivedBitTransaction)) {
-            $this->receivedBitTransactions->add($receivedBitTransaction);
-            $receivedBitTransaction->setReceiver($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReceivedBitTransaction(BitTransaction $receivedBitTransaction): self
-    {
-        if ($this->receivedBitTransactions->removeElement($receivedBitTransaction)) {
-            // set the owning side to null (unless already changed)
-            if ($receivedBitTransaction->getReceiver() === $this) {
-                $receivedBitTransaction->setReceiver(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Profile>
-     */
-    public function getProfiles(): Collection
-    {
-        return $this->profiles;
-    }
-
-    public function addProfile(Profile $profile): self
-    {
-        if (!$this->profiles->contains($profile)) {
-            $this->profiles->add($profile);
-            $profile->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProfile(Profile $profile): self
-    {
-        if ($this->profiles->removeElement($profile)) {
-            // set the owning side to null (unless already changed)
-            if ($profile->getUser() === $this) {
-                $profile->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getCreated(): ?\DateTimeInterface
     {
         return $this->created;
@@ -370,18 +216,6 @@ class User extends EntityBase implements UserInterface, PasswordAuthenticatedUse
     public function setUpdated(\DateTimeInterface $updated): self
     {
         $this->updated = $updated;
-
-        return $this;
-    }
-
-    public function getActiveProfile(): ?Profile
-    {
-        return $this->activeProfile;
-    }
-
-    public function setActiveProfile(?Profile $activeProfile): self
-    {
-        $this->activeProfile = $activeProfile;
 
         return $this;
     }
