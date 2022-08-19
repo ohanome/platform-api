@@ -1,0 +1,13 @@
+# Important note: Keep the keys in alphabetical order.
+mail:
+  user:
+    activation:
+      link_broken: 'If this link does not work, try to copy the link into your browser. If this is not helping, please contact our support: <a href="mailto:help@ohano.me">help@ohano.me</a>'
+      task: 'to complete this step of your account registration, you need to verify your email address by clicking on the link below. You cannot log in until you successfully activated your account.'
+user:
+  account:
+    activation: 'Account activation'
+  not_activated: 'User is not activated'
+  not_verified: 'User is not verified'
+test:
+  locale: 'English was detected as language.'

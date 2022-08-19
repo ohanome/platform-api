@@ -10,8 +10,10 @@ use App\Service\SubscriptionService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route("/misc", name: 'app_misc_')]
 class MiscController extends AbstractController
@@ -113,6 +115,15 @@ class MiscController extends AbstractController
 
         return $this->json([
             'message' => 'Cleanup complete',
+        ]);
+    }
+
+    #[Route('/locale-test', name: 'locale_test', methods: ['GET'])]
+    public function localeTest(Request $request, TranslatorInterface $translator): JsonResponse
+    {
+        return $this->json([
+            'message' => $translator->trans('test.locale'),
+            'determined locale' => $request->getLocale(),
         ]);
     }
 }

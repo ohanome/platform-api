@@ -1,0 +1,95 @@
+# Important note: Keep the keys in alphabetical order.
+error:
+  connection:
+    method:
+      must:
+        be:
+          delete:
+            message: 'Die Request-Method muss DELETE sein.'
+            description: 'Prüfe, wie du dich mit der API verbindest.'
+          get:
+            message: 'Die Request-Method muss GET sein.'
+            description: 'Prüfe, wie du dich mit der API verbindest.'
+          head:
+            message: 'Die Request-Method muss HEAD sein.'
+            description: 'Prüfe, wie du dich mit der API verbindest.'
+          patch:
+            message: 'Die Request-Method muss PATCH sein.'
+            description: 'Prüfe, wie du dich mit der API verbindest.'
+          post:
+            message: 'Die Request-Method muss POST sein.'
+            description: 'Prüfe, wie du dich mit der API verbindest.'
+          put:
+            message: 'Die Request-Method muss PUT sein.'
+            description: 'Prüfe, wie du dich mit der API verbindest.'
+  user:
+    activation:
+      code:
+        invalid:
+          message: 'Der Aktivierungscode ist ungültig.'
+          description: 'Prüfe, ob du die URL richtig kopiert hast. Falls du Hilfe benötigst, kontaktiere den Support via E-Mail oder Discord.'
+        used:
+          message: 'Der Aktivierungscode wurde bereits verwendet.'
+          description: 'Falls dein Konto noch nicht aktiviert wurde, muss ein neuer Code für dich erstellt werden. Wende dich hierzu bitte an den Support via E-Mail oder Discord.'
+      user:
+        invalid:
+          message: 'Der Aktivierungscode ist ungültig.'
+          description: 'Prüfe, ob du die URL richtig kopiert hast. Falls du Hilfe benötigst, kontaktiere den Support via E-Mail oder Discord.'
+    email:
+      already_exists:
+        message: 'Diese E-Mail-Adresse ist bereits registriert.'
+        description: 'Du kannst dich nicht mehr mit dieser E-Mail-Adresse registrieren. Versuche es mit einer anderen E-Mail-Adresse.'
+      invalid:
+        message: 'Diese E-Mail-Adresse ist ungültig.'
+        description: 'Bitte überprüfe, ob du die E-Mail-Adresse korrekt eingegeben hast.'
+      missing:
+        message: 'Die E-Mail-Adresse fehlt.'
+        description: 'Bitte gebe eine gültige E-Mail-Adresse an.'
+    not_found:
+      message: 'Dieser Benutzer wurde nicht gefunden.'
+      description: 'Bitte überprüfe, ob du dich eventuell beim Usernamen vertippt hast. Eventuell gibt es den Benutzer, den du suchst aber auch gar nicht.'
+    password:
+      missing:
+        message: 'Das Passwort fehlt.'
+        description: 'Bitte gebe ein Passwort an.'
+    username:
+      already_exists:
+        message: 'Dieser Benutzername ist bereits vergeben.'
+        description: 'Bitte wähle einen anderen Benutzernamen.'
+      blocked:
+        message: 'Dieser Benutzername ist gesperrt.'
+        description: 'Bitte wähle einen anderen Benutzernamen.'
+      invalid:
+        message: 'Dieser Benutzername ist ungültig.'
+        description: 'Bitte überprüfe, ob du ungültige zeichen verwendet hast. Erlaubt sind alle Zeichen von A bis Z, alle Ziffern und die zeichen "." (Punkt), "-" (Bindestrich) und "_" (Unterstrich).'
+    you:
+      account:
+        already_activated:
+          message: 'Dein Account ist bereits aktiviert.'
+          description: 'Du kannst deinen Account nur einmal aktivieren.'
+        already_verified:
+          message: 'Dein Account ist bereits verifiziert.'
+          description: 'Du kannst deinen Account nur einmal verifizieren.'
+        not_activated:
+          message: 'Dein Account ist noch nicht aktiviert.'
+          description: 'Du musst deinen Account zuerst aktivieren. Falls du keine E-Mail erhalten hast, kannst du dich an unseren Support wenden, indem du uns entweder auf Discord oder per E-Mail kontaktierst.'
+        not_verified:
+          message: 'Dein Account ist noch nicht verifiziert.'
+          description: 'Du musst deinen Account zuerst verifizieren. Falls du Hilfe dabei benötigst, kannst du dich an unseren Support wenden, indem du uns entweder auf Discord oder per E-Mail kontaktierst.'
+mail:
+  user:
+    activation:
+      link_broken: 'Falls der Link nicht funktioniert, versuche ihn in zu kopieren und direkt in deinem Browser aufzurufen. Wenn das auch nicht hilft, kontaktiere bitte den Support: <a href="mailto:help@ohano.me>help@ohano.me</a>'
+      task: 'um diesen Schritt der Registrierung abzuschließen, musst du deine E-Mail-Adresse bestätigen, indem du auf den folgenden Link klickst.'
+user:
+  account:
+    activation: 'Account-Aktivierung'
+    # Contains all messages directly addressed to the user
+    you:
+      already_activated: 'Dein Account ist bereits aktiviert.'
+      already_verified: 'Dein Account ist bereits verifiziert.'
+      not_activated: 'Dein Account wurde noch nicht aktiviert.'
+      not_verified: 'Dein Account wurde noch nicht verifiziert.'
+    activated: 'Das Konto wurde erfolgreich aktiviert.'
+test:
+  locale: 'Deutsch wurde als Sprache erkannt.'

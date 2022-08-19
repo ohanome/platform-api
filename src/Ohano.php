@@ -4,12 +4,14 @@ namespace App;
 
 class Ohano
 {
+    const PRICING_ADVANCED_FACTOR = 2;
+    const PRICING_PRO_FACTOR = 5;
     const PRICING_PLUS_FACTOR = 1.5;
     const PRICING_FLEX_FACTOR = 10;
 
     const PRICE_BASIC = 5;
-    const PRICE_ADVANCED = 10;
-    const PRICE_PRO = 25;
+    const PRICE_ADVANCED = self::PRICE_BASIC * self::PRICING_ADVANCED_FACTOR;
+    const PRICE_PRO = self::PRICE_BASIC * self::PRICING_PRO_FACTOR;
     const PRICE_GOLD = self::PRICE_ADVANCED * self::PRICING_FLEX_FACTOR;
     const PRICE_DIAMOND = self::PRICE_PRO * self::PRICING_FLEX_FACTOR;
     const PRICE_BASIC_PLUS = self::PRICE_BASIC * self::PRICING_PLUS_FACTOR;
@@ -19,4 +21,9 @@ class Ohano
     const PRICE_DIAMOND_PLUS = self::PRICE_DIAMOND * self::PRICING_PLUS_FACTOR;
 
     const STARTING_BITS = 10000;
+
+    const FLAG_MUST_BE_ACTIVATED = 1;
+    const FLAG_MUST_BE_VERIFIED = 2;
+    const FLAG_MUST_BE_MODERATOR = 4;
+    const FLAG_MUST_BE_ADMIN = 8;
 }
